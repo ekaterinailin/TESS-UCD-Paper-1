@@ -107,12 +107,32 @@ To account for these effects we arrived at the following procedure: If the diffe
 Next, we removed remaining trends with using a rolling median on time scales of $10$ h, longer than the vast majority of flares was visible. To remove trends on shorter time scales, we masked outliers that could be flare candidates. We padded them with $25$ data points before and after each series of outliers. We applied a Savitzky-Golay~\citep{SavGol1964} filter (\texttt{scipy.signal.savgol\_filter},~\citealt{scipy2019}) with window sizes that were three times shorter that the dominant residual frequency in any continuous observing period. The Savitzky-Golay filter is known as a flexible high-pass filter in signal processing. We determined the dominant frequency using a Fast Fourier Transformation (FFT) from \texttt{scipy.fftpack}~\citep{scipy2019}. The minimum window size was $2.5$ h. In a final step we filtered the light curve with the minimum window size of 2.5 h, and estimated the scatter in the light curve using a rolling standard deviation (window size$= .5$ h) masking and padding positive outliers, i.e. flare candidates, as before. The masked regions in the light curve were assigned the mean uncertainty from the rest of the light curve. Thus we used the non-flaring parts of the light curve to determine the quiescent flux and noise propertiers.
 \\
 The timescale of rotational modulation for the fastest rotating stars came close or even fell below flare durations of a few observed events. Removing variability on these timescales with any kind of band pass filter would modify the flare signal, too.  resorting and removing sinusoidal signal with very short periods, however, circumvented this shortcoming. Stars that showed these multiperiod flares will be adressed elsewhere~(Ilin et al. (in prep.)).
+\subsubsection{Flare finding}
+In the residual light curve we applied the a sigma clipping algorithm with three different criteria that was used in previous works \citep{chang2015, davenport2016, ilin2019}. The criteria are:
+
+XXX
+XXX
+XXX
+
+Sequences of data point that satis
 \subsubsection{Amplitude, duration, ED and their uncertainties}
-determine the noise properties: Use the flaring part of the LC to determine the flare properties, use the rest to estimate the noise properties. Even for the most active stars, flares do not take up more than \# \% observed time.
-\\
-ED is calculated as the area under the curve.
-\\
-uncertainty on the duration of the flares is dominated by the decay tail of the flare hiding in the noise and shortening the duration accordingly. On the other hand, the shortest flares cannot lift the minimum required three subsequent data points above the 3$\sigma$ threshold. Theoretically, extremely long, and low-amplitude flares, that barely exceed the noise limits may be levelled out by the de-trending procedure. But such flares have not been observed yet, not least because above a duration of a few hours low amplitude variability could also be spots or are longer-lived phenomena on the stellar surface. 
+For all flare candidates that fulfilled the above criteria in a LC, the amplitudes, start and end times, and the equivalent duration ($ED$) were extracted. The latter is defined as the area between the LC and the quiescent flux, i.e. the integrated flare flux divided by the median quiescent flux $F_0$ of the star, integrated over the flare duration~\citep{huntwalker2012}:
+\begin{equation}
+ED=\displaystyle \int \mathrm dt \frac{F_{flare}(t)}{F_0}
+\end{equation}
+Since it is measured relative to the quiescent star, $ED$ is a quantity independent of calibration and distance. The uncertainty on $ED$ is determined following ~\citet{davenport2016} as
+\begin{equation}
+\sigma ED = \sqrt(\frac{ED^2}{n\chi^2})
+\end{equation}
+$n$ is the number of data points contained in the flare, $\chi^2$ is the reduced goodness-of-fit metric computed for each flare as
+\begin{equation}
+\chi^2 = \frac{1}{n}\displaystyle\sum \frac{(y_i-c_i)^2}{\sigma_i^2}
+\end{equation}
+where $y_i$ is the $i$th flux value of the flare in the de-trended light curve, $\sigma_i$ is the $i$th uncertainty, and $n$ is the number of data points contained in the flare. $c_i$ is the $i$th value of the iterative quiescent light curve. 
+
+The  uncertainty on the duration of the flares is dominated by the decay tail of the flare hiding in the noise and shortening the duration accordingly. On the other hand, the shortest flares cannot lift the minimum required three subsequent data points above the 3$\sigma$ threshold. Theoretically, extremely long, and low-amplitude flares, that barely exceed the noise limits may be levelled out by the de-trending procedure. But such flares have not been observed yet, not least because above a duration of a few hours low amplitude variability could also be spots or are longer-lived phenomena on the stellar surface. 
+
+The uncertainty on amplitude [...]
 \subsubsection{Injection-recovery}
 
 %---------------------------------------------
