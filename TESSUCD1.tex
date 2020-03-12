@@ -87,6 +87,19 @@ We requested a total of 120 targets in short cadence data, of which \# fell on a
 
 To confirm that the lightcurves were accurately extracted from the target pixel files, we reviewed the aperture placement on the target pixel files (I haven't done them all yet, but I do want to -SJS). For targets where the extraction selected the appropriate source, we adopted the SAP flux from the lightcurve files. For the other targets, we re-extracted the lightcurves from the target pixel files using a magic incantation. 
 
+\subsubsection{Spectral Types}
+%---------------------------------------------
+The distribution of flares with respect to spectral type is shown in Figure~\ref{fig:stflare}. The fraction of objects that flare and the overall flare rate both decline with spectral type. This is in direct contrast to the increase in number of objects showing magnetic activity in the H$\alpha$ emission line \citep{Schmidt2015}, but may instead trace the well-known decline in strength of that emission line. 
+
+White light flares do exist on L dwarfs \citep{Schmidt2016a,Paudel2017}, and may simply be too rare at energies strong enough to be detected in our TESS short cadence sample. With the incomplete dataset, there's 5 sectors on L0 and later. I'd like to be able to say something a little more firm about whether the lack of flares is totally expected or not! 
+
+\citep{Schmidt2015}
+\begin{figure}
+	\includegraphics[width=0.5\columnwidth]{flare_stats.eps}
+    \caption{Fraction of objects that flare (top panel) and number of flares per year (bottom panel) in the TESS UCD cycle 1 short cadence sample. The flaring fraction and the rate of flares both show a decline from M6 to L spectral types, with no flares yet found in L0 and later dwarfs.}
+    \label{fig:stflare}
+\end{figure}
+
 \section{Rotation Analysis} \label{sec:rot}
 \subsection{Variability amplitudes} \label{subsec:varamp}
 \subsection{LC Morphologies} \label{subsec:LCmorph}
@@ -108,7 +121,7 @@ Next, we removed remaining trends with using a rolling median on time scales of 
 \\
 The timescale of rotational modulation for the fastest rotating stars came close or even fell below flare durations of a few observed events. Removing variability on these timescales with any kind of band pass filter would modify the flare signal, too.  resorting and removing sinusoidal signal with very short periods, however, circumvented this shortcoming. Stars that showed these multiperiod flares will be adressed elsewhere~(Ilin et al. (in prep.)).
 \subsubsection{Flare finding}
-In the residual light curve we applied the a sigma clipping algorithm with three different criteria that was used in previous works \citep{chang2015, davenport2016, ilin2019}. The criteria are:
+In the residual light curve we applied the a sigma clipping algorithm with three different criteria that was used in previous works \citep{chang2015, davenport2016, Ilin2019}. The criteria are:
 
 XXX
 XXX
@@ -130,24 +143,13 @@ $n$ is the number of data points contained in the flare, $\chi^2$ is the reduced
 \end{equation}
 where $y_i$ is the $i$th flux value of the flare in the de-trended light curve, $\sigma_i$ is the $i$th uncertainty, and $n$ is the number of data points contained in the flare. $c_i$ is the $i$th value of the iterative quiescent light curve. 
 
-The  uncertainty on the duration of the flares is dominated by the decay tail of the flare hiding in the noise and shortening the duration accordingly. On the other hand, the shortest flares cannot lift the minimum required three subsequent data points above the 3$\sigma$ threshold. Theoretically, extremely long, and low-amplitude flares, that barely exceed the noise limits may be levelled out by the de-trending procedure. But such flares have not been observed yet, not least because above a duration of a few hours low amplitude variability could also be spots or are longer-lived phenomena on the stellar surface. 
-
-The uncertainty on amplitude [...]
+The  uncertainty on the duration of the flares is dominated by the decay tail of the flare hiding in the noise and shortening the duration accordingly. On the other hand, the shortest flares cannot lift the minimum required three subsequent data points above the 3$\sigma$ threshold. Theoretically, extremely long, and low-amplitude flares, that barely exceed the noise limits may be levelled out by the de-trending procedure. But such flares have not been observed yet, not least because above a duration of a few hours low amplitude variability could also be spots or are longer-lived phenomena on the stellar surface. The uncertainty on amplitude consists of both the photometric uncertainty, and a bias towards lower uncertainties that stems from the integration over the 2 min time bin which flattens the sharp peak of the flare. Because both uncertainties are dominated by systematic effects, we quantify these properties by injecting and recovering flares with known properties, and calculating the variance in these properties for those flares that are recovered with the measured amplitude and duration.
 \subsubsection{Injection-recovery}
+We injected a large number of synthetic flares in each light curve, and ran the de-trending and flare finding procedure detailed above on each of them. The statistical comparison between injected and recovered properties allows us to quantify the properties of the observed flare candidates. First, we measured the ratio of the injected $ED$ to the recovered $ED$ as a function of recovered amplitude $a_r$ and duration $d_r$. Second, we determined the injected $(a_i,d_i)$ bin that corresponds to a given recovered, that is observed, $(a_r,d_r)$ bin. The injected bin contains a sample of synthetic flares. At a fixed number of flares per bin, and if the bin is large, the sample's variance depends on the size of the bin. But if the bin is small enough the variance arises from the light curve properties that affect the recovery of a flare: photometric noise, variability, and time sampling. Ultimately, we can not only better characterize the flares' properties but also calculate the probability of any given flare to be recovered by comparing the number of flares in the recovered $(a_r,d_r)$ bin to the number of flares in the corresponding injected $(a_i,d_i)$ bin. So for each flare candidate we can find a corrected $a$, $d$, $ED$, and a recovery probability. The latter two are used to statistically correct for systematic effects in the light curves, and obtain more accurate flare frequency distributions (section \ref{subsec:FFD}).
 
-%---------------------------------------------
-The distribution of flares with respect to spectral type is shown in Figure~\ref{fig:stflare}. The fraction of objects that flare and the overall flare rate both decline with spectral type. This is in direct contrast to the increase in number of objects showing magnetic activity in the H$\alpha$ emission line \citep{Schmidt2015}, but may instead trace the well-known decline in strength of that emission line. 
-
-White light flares do exist on L dwarfs \citep{Schmidt2016a,Paudel2017}, and may simply be too rare at energies strong enough to be detected in our TESS short cadence sample. With the incomplete dataset, there's 5 sectors on L0 and later. I'd like to be able to say something a little more firm about whether the lack of flares is totally expected or not! 
-
-\citep{Schmidt2015}
-\begin{figure}
-	\includegraphics[width=0.5\columnwidth]{flare_stats.eps}
-    \caption{Fraction of objects that flare (top panel) and number of flares per year (bottom panel) in the TESS UCD cycle 1 short cadence sample. The flaring fraction and the rate of flares both show a decline from M6 to L spectral types, with no flares yet found in L0 and later dwarfs.}
-    \label{fig:stflare}
-\end{figure}
-
-Injection recovery, and how that affects our flares and the uncertainties. 
+%-------------------------------------------------------------------------
+% INJECTION RECOVERY HEATMAP
+%-------------------------------------------------------------------------
 
 \subsection{Flare Energies from Quiescent UCD Luminosities} \label{subsec:tessmag}
 To calculate energies for our flares, we multiplied the equivalent duration, measured from the TESS lightcurve, by the quiescent flux in the TESS band. To estimate the quiescent flux, we used spectrophotometry of template spectra of ultracool dwarfs \citep{Bochanski2007a,Schmidt2014a} combined with spectra from the SpeX library (cite or site or both I forget), anchored to their Gaia magnitudes \citep{Gaia-Collaboration2018}. 
@@ -172,15 +174,15 @@ The flare frequency distribution, binned by spectral type, is shown in Figure~\r
 \end{figure}
 
 \begin{figure}
-	\includegraphics[width=0.5\columnwidth]{12_03_2020_14_10_individual_target_ffds.png}
+	\includegraphics[width=.8\columnwidth]{12_03_2020_14_10_individual_target_ffds.png}
     \caption{Log of flare frequency as a function of $ED$ for the most actively flaring stars in TESS Cycle 1 short cadence sample.}
-    \label{fig:ffd_all_ed}
+    \label{fig:ffd_indiv_ed}
 \end{figure}
 
 \begin{figure}
-	\includegraphics[width=0.5\columnwidth]{12_03_2020_14_42_spt_ffds.png}
+	\includegraphics[width=.8\columnwidth]{12_03_2020_14_42_spt_ffds.png}
     \caption{Log of flare frequency as a function of $ED$ split by spectral type in TESS Cycle 1 short cadence sample.}
-    \label{fig:ffd_all_ed}
+    \label{fig:ffd_spt_ed}
 \end{figure}
 
 Here, we will probably also talk a lot about the power law fits. 
