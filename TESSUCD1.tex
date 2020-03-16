@@ -1,6 +1,4 @@
-
 \documentclass{aastex62}
-
 
 \newcommand{\vdag}{(v)^\dagger}
 \newcommand\aastex{AAS\TeX}
@@ -13,7 +11,6 @@
 \received{}
 \revised{}
 \accepted{}
-
 
 \submitjournal{ApJ or something} % or whatever!
 
@@ -142,7 +139,19 @@ The  uncertainty on the duration of the flares is dominated by the decay tail of
 We injected a large number of synthetic flares in each light curve, and ran the de-trending and flare finding procedure detailed above on each of them. The statistical comparison between injected and recovered properties allows us to quantify the properties of the observed flare candidates. First, we measured the ratio of the injected $ED$ to the recovered $ED$ as a function of recovered amplitude $a_r$ and duration $d_r$. Second, we determined the injected $(a_i,d_i)$ bin that corresponds to a given recovered, that is observed, $(a_r,d_r)$ bin. The injected bin contains a sample of synthetic flares. At a fixed number of flares per bin, and if the bin is large, the sample's variance depends on the size of the bin. But if the bin is small enough the variance arises from the light curve properties that affect the recovery of a flare: photometric noise, variability, and time sampling. Ultimately, we can not only better characterize the flares' properties but also calculate the probability of any given flare to be recovered by comparing the number of flares in the recovered $(a_r,d_r)$ bin to the number of flares in the corresponding injected $(a_i,d_i)$ bin. So for each flare candidate we can find a corrected $a$, $d$, $ED$, and a recovery probability. The latter two are used to statistically correct for systematic effects in the light curves, and obtain more accurate flare frequency distributions (section \ref{subsec:FFD}).
 
 %-------------------------------------------------------------------------
-% INJECTION RECOVERY HEATMAP
+% INJECTION RECOVERY HEATMAPS
+\begin{figure}
+	\includegraphics[width=0.5\columnwidth]{figures/heatmap_recprob_TIC167894019_s0004.png}
+    \caption{Recovery probability as a function of FWHM and amplitude for synthetic flares injected into the light curve of TIC 167894019 (sector 4).}
+    \label{fog:injrec_recprob}
+\end{figure}
+
+\begin{figure}
+	\includegraphics[width=.5\columnwidth]{figures/heatmap_edrec_TIC167894019_s0004.png}
+    \caption{Ratio of recovered to injected $ED$ as a function of recovered duration and amplitude for synthetic flares injected into the light curve of TIC 167894019 (sector 4).}
+    \label{fig:injrec_edrec}
+\end{figure}
+
 %-------------------------------------------------------------------------
 
 \subsection{Flare Energies from Quiescent UCD Luminosities} \label{subsec:tessmag}
@@ -153,7 +162,7 @@ We obtained updates TESS fluxes and magnitudes. Then calculated TESS luminositie
 And yes, I should figure out what to do for objects not in Gaia. 
 
 \subsection{Flare Frequency distributions} \label{subsec:FFD}
-The occurrence rate of flares as a function of their energies, also termed flare frequency distribution (FFD, \cite{lacy_uv_1976}), is thought to be described as a power law
+The occurrence rate of flares as a function of their energies, also termed flare frequency distribution (FFD, \cite{lacy1976}), is thought to be described as a power law
 \begin{equation}
 N(E)\mathrm{d}E = \beta E^{-\alpha}\mathrm{d}E.
 \end{equation}
@@ -210,7 +219,7 @@ GJ1243, a radiply rotating M4 dwarf with $P=0.592$\,d, was observed by the prima
 \vspace{5mm}
 \facilities{}
 
-\software{astropy~\citep{astropy2018}, astroquery~\citep{astroquery2019}.}
+\software{astropy~\citep{astropy2018}, astroquery~\citep{astroquery2019}. This research made use of Lightkurve, a Python package for Kepler and TESS data analysis~\citep{lightkurve2019}. numpy, scipy, matplotlib}
 
 % it's a rather incomplete bib file, I'll add or feel free to add!
 \bibliography{TESS_UCD} 
