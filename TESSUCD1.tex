@@ -117,17 +117,11 @@ TESS light curves have pre-defined aperture masks but for a number of targets th
 TESS UCD light curves exhibited various astrophysical and systematic trends. Removing them was necessary to enable searching the residual time series for flares with a simple, deterministic algorithm, and determining the quiescent flux nd noise properties of the light curve as accurately as possible. The main trends stemmed from the movement of the spacecraft, and stellar rotational modulation caused by spots.
 \\
 To account for these effects we arrived at the following procedure: If the difference in flux from the beginning to the end of the light curve was $>20,\%$ we fitted a cubic spline to the $12$ h binned light curve to remove strong global trends that take effect on time scales of multiple days. When no strong global trends were left, we removed strong rotational modulation iteratively using sine fits with periods obtained from  Lomb-Scargle periodograms~(\texttt{lightkurve.Periodogram}, see~\citealt{lomb1976,scargle1982}) until no strong periods were left in the light curve. To this end, we computed Signal-to-Noise Spectra from the periodograms using the \texttt{lightkurve.Periodogram.flatten()} method that divided out the noise background using a moving median where the filter width that grows logarithmically in frequency space.
-Next, we removed remaining trends with using a rolling median on time scales of $10$ h, longer than the vast majority of flares was visible. To remove trends on shorter time scales, we masked outliers that could be flare candidates. We padded them with $25$ data points before and after each series of outliers. We applied a Savitzky-Golay~\citep{SavGol1964} filter (\texttt{scipy.signal.savgol\_filter},~\citealt{scipy2019}) with window sizes that were three times shorter that the dominant residual frequency in any continuous observing period. The Savitzky-Golay filter is known as a flexible high-pass filter in signal processing. We determined the dominant frequency using a Fast Fourier Transformation (FFT) from \texttt{scipy.fftpack}~\citep{scipy2019}. The minimum window size was $2.5$ h. In a final step we filtered the light curve with the minimum window size of 2.5 h, and estimated the scatter in the light curve using a rolling standard deviation (window size$= .5$ h) masking and padding positive outliers, i.e. flare candidates, as before. The masked regions in the light curve were assigned the mean uncertainty from the rest of the light curve. Thus we used the non-flaring parts of the light curve to determine the quiescent flux and noise propertiers.
+Next, we removed remaining trends with using a rolling median on time scales of $10$ h, longer than the vast majority of flares was visible. To remove trends on shorter time scales, we masked outliers that could be flare candidates. We padded them with $25$ data points before and after each series of outliers. We applied a Savitzky-Golay~\citep{SavGol1964} filter (\texttt{scipy.signal.savgol\_filter},~\citealt{scipy2019}) with window sizes that were three times shorter that the dominant residual frequency in any continuous observing period. The Savitzky-Golay filter is known as a flexible high-pass filter in signal processing. We determined the dominant frequency using a Fast Fourier Transformation (FFT) from \texttt{scipy.fftpack}~\citep{scipy2019}. The minimum window size was $2.5$ h. In a final step we filtered the light curve with the minimum window size of 2.5 h, and estimated the uncertainty in the light curve using a rolling standard deviation (window size$= .5$ h) masking and padding positive outliers, i.e. flare candidates, as before. The masked regions in the light curve were assigned the mean uncertainty from the rest of the light curve. Thus we used the non-flaring parts of the light curve to determine the quiescent flux and noise propertiers.
 \\
 The timescale of rotational modulation for the fastest rotating stars came close or even fell below flare durations of a few observed events. Removing variability on these timescales with any kind of band pass filter would modify the flare signal, too.  resorting and removing sinusoidal signal with very short periods, however, circumvented this shortcoming. Stars that showed these multiperiod flares will be adressed elsewhere~(Ilin et al. (in prep.)).
 \subsubsection{Flare finding}
-In the residual light curve we applied the a sigma clipping algorithm with three different criteria that was used in previous works \citep{chang2015, davenport2016, Ilin2019}. The criteria are:
-
-XXX
-XXX
-XXX
-
-Sequences of data point that satis
+To find flares in the residual light curve we applied a modification of the sigma clipping algorithm that was used in previous works \citep{chang2015, davenport2016, Ilin2019}, and is called via \texttt{FlareLightCurve.find\_flares()}. If at least three outliers in the sequence are $3\sigma$ positive outliers with respect to the iterative median flux and estimated uncertainty they are flagged as a flare candidate. The iterative median is arrived at by calculating the median in each continuous observing period, then masking $3\sigma_e$ outliers from that median, where $\sigma_e$ is the estimated standard deviation assuming a normal distribution of flux values from a the median absolute deviation~\citep{aigrain_software2016}. Additionally, if $n>1$ outliers in a sequence are detected, we mask $\sim3\sqrt{n}$ observations before and after the sequence. The procedure is repeated excluding the masked outliers until no additional outliers are masked during an iteration. Flare candidates that are separated by less than three data point, are treated as a single event. After searching the entire light curve for flares, the start and stop time, amplitude, and $ED$ of all flare candidates are compiled in a table that can be accessed via \texttt{FlareLightCurve.flares}. 
 \subsubsection{Amplitude, duration, ED and their uncertainties}
 For all flare candidates that fulfilled the above criteria in a LC, the amplitudes, start and end times, and the equivalent duration ($ED$) were extracted. The latter is defined as the area between the LC and the quiescent flux, i.e. the integrated flare flux divided by the median quiescent flux $F_0$ of the star, integrated over the flare duration~\citep{huntwalker2012}:
 \begin{equation}
@@ -159,7 +153,18 @@ We obtained updates TESS fluxes and magnitudes. Then calculated TESS luminositie
 And yes, I should figure out what to do for objects not in Gaia. 
 
 \subsection{Flare Frequency distributions} \label{subsec:FFD}
+The occurrence rate of flares as a function of their energies, also termed flare frequency distribution (FFD, \cite{lacy_uv_1976}), is thought to be described as a power law
+\begin{equation}
+N(E)\mathrm{d}E = \beta E^{-\alpha}\mathrm{d}E.
+\end{equation}
+In the log-log representation the above relation reads
+\begin{equation}
+\log N(E) \mathrm{d}E = [\log\beta -\alpha\log E] \mathrm{d}E.
+\end{equation}
+In the cumulative distribution the power law exponent becomes $-\hat{\alpha} = -\alpha +1$. 
+ We used a stabilized Maximum Likelihood Estimator~\citep{maschberger2009} to find $\alpha$. A non-linear least squares fit yielded the intercept $\beta$. For a reliable
 The flare frequency distribution, binned by spectral type, is shown in Figure~\ref{fig:ffd}. Overall, the M6 and M7 dwarfs flare more than those in previous work. 
+
 
 \begin{figure}
 	\includegraphics[width=0.5\columnwidth]{FFD_v6.eps}
