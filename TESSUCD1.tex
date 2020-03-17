@@ -142,13 +142,13 @@ We injected a large number of synthetic flares in each light curve, and ran the 
 % INJECTION RECOVERY HEATMAPS
 \begin{figure}
 	\includegraphics[width=0.5\columnwidth]{figures/heatmap_recprob_TIC167894019_s0004.png}
-    \caption{Recovery probability as a function of FWHM and amplitude for synthetic flares injected into the light curve of TIC 167894019 (sector 4).}
-    \label{fog:injrec_recprob}
+    \caption{Recovery probability as a function of intrinsic FWHM and amplitude for 9000 synthetic flares injected into the light curve of TIC 167894019 (sector 4).}
+    \label{fig:injrec_recprob}
 \end{figure}
 
 \begin{figure}
 	\includegraphics[width=.5\columnwidth]{figures/heatmap_edrec_TIC167894019_s0004.png}
-    \caption{Ratio of recovered to injected $ED$ as a function of recovered duration and amplitude for synthetic flares injected into the light curve of TIC 167894019 (sector 4).}
+    \caption{Ratio of recovered to injected $ED$ as a function of recovered duration and amplitude for the same synthetic sample as in Fig.~\ref{fig:injrec_recprob}}.
     \label{fig:injrec_edrec}
 \end{figure}
 
@@ -171,15 +171,16 @@ In the log-log representation the above relation reads
 \log N(E) \mathrm{d}E = [\log\beta -\alpha\log E] \mathrm{d}E.
 \end{equation}
 In the cumulative distribution the power law exponent becomes $-\hat{\alpha} = -\alpha +1$. 
- We used a stabilized Maximum Likelihood Estimator~\citep{maschberger2009} to find $\alpha$. A non-linear least squares fit yielded the intercept $\beta$. For a reliable
-The flare frequency distribution, binned by spectral type, is shown in Figure~\ref{fig:ffd}. Overall, the M6 and M7 dwarfs flare more than those in previous work. 
-
-
-\begin{figure}
-	\includegraphics[width=0.5\columnwidth]{FFD_v6.eps}
-    \caption{Log of flare frequency as a function of TESS band flare energy for the TESS Cycle 1 short cadence sample (individual symbols) and the K2 ultracool dwarfs of  \citet{Paudel2017}. The TESS observations overall extend to lower frequencies and higher energies due to the larger total observing time. The M6 and M7 dwarfs in TESS flare more strongly and frequently than those of K2, though the M8 and M9 dwarfs show only a handful of flares at lower energies and frequencies of K2.  }
-    \label{fig:ffd}
-\end{figure}
+We used a stabilized Maximum Likelihood Estimator~\citep{maschberger2009} to find $\alpha$. A non-linear least squares fit yielded the intercept $\beta$. We applied two powerful statistical tests to the results~\citep{maschberger2009}. The first is the stabilized Kolmogorov-Smirnov statistic which indicates if the distribution is consistent with a power law with the exponent we determined. We chose a significance level of 5\%, in agreement with previous work~\citep{loyd2018}. The second is the exceedance statistic, which is a test for truncation at the high energy limit of the FFD. To determine $p$-values we drew samples from untruncated power laws with the same minimum energy and number of events as in the observed FFDs. The distribution of the obtained maximum $ED$ values was used for a left-sided hypothesis test at $p=2.5\%$. 
+ 
+%The flare frequency distribution, binned by spectral type, is shown in Figure~\ref{fig:ffd}. Overall, the M6 and M7 dwarfs flare more than those in previous work. 
+%
+%
+%\begin{figure}
+%	\includegraphics[width=0.5\columnwidth]{FFD_v6.eps}
+%    \caption{Log of flare frequency as a function of TESS band flare energy for the TESS Cycle 1 short cadence sample (individual symbols) and the K2 ultracool dwarfs of  \citet{Paudel2017}. The TESS observations overall extend to lower frequencies and higher energies due to the larger total observing time. The M6 and M7 dwarfs in TESS flare more strongly and frequently than those of K2, though the M8 and M9 dwarfs show only a handful of flares at lower energies and frequencies of K2.  }
+%    \label{fig:ffd}
+%\end{figure}
 
 \begin{figure}
 	\includegraphics[width=0.5\columnwidth]{12_03_2020_13_03_full_sample_ffd.png}
