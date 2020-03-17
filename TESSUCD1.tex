@@ -1,4 +1,4 @@
-\documentclass{aastex62}
+\documentclass[twocolumn]{aastex62}
 
 \newcommand{\vdag}{(v)^\dagger}
 \newcommand\aastex{AAS\TeX}
@@ -77,7 +77,7 @@ Maybe I should describe a Gaia cross-match here? Not sure I've done the whole sa
 We requested a total of 120 targets in short cadence data, of which \# fell on artifacts or between chip gaps. The \# targets observed in Sectors 1-13 This encompasses a total of \# targets with \# observations. Figure~\ref{fig:ststat} shows the spectral type distribution and total time observed in the sample. 
 
 \begin{figure}
-	\includegraphics[width=0.5\columnwidth]{ST_stats.eps}
+	\includegraphics[width=\columnwidth]{ST_stats.eps}
     \caption{Number of objects (top panel) and total time observed in TESS so far (bottom panel) as a function of spectral type for the TESS UCD cycle 1 short cadence sample. The strong decline, both in number of objects and time observed, is due both to early-type objects being more common and also to the declining brightness with later types.}
     \label{fig:ststat}
 \end{figure}
@@ -92,7 +92,7 @@ White light flares do exist on L dwarfs \citep{Schmidt2016a,Paudel2017}, and may
 
 \citep{Schmidt2015}
 \begin{figure}
-	\includegraphics[width=0.5\columnwidth]{flare_stats.eps}
+	\includegraphics[width=\columnwidth]{flare_stats.eps}
     \caption{Fraction of objects that flare (top panel) and number of flares per year (bottom panel) in the TESS UCD cycle 1 short cadence sample. The flaring fraction and the rate of flares both show a decline from M6 to L spectral types, with no flares yet found in L0 and later dwarfs.}
     \label{fig:stflare}
 \end{figure}
@@ -142,13 +142,13 @@ We injected a large number of synthetic flares in each light curve, and ran the 
 %-------------------------------------------------------------------------
 % INJECTION RECOVERY HEATMAPS
 \begin{figure}
-	\includegraphics[width=0.5\columnwidth]{figures/heatmap_recprob_TIC167894019_s0004.png}
+	\includegraphics[width=\columnwidth]{figures/heatmap_recprob_TIC167894019_s0004.png}
     \caption{Recovery probability as a function of intrinsic FWHM and amplitude for 9000 synthetic flares injected into the light curve of TIC 167894019 (sector 4).}
     \label{fig:injrec_recprob}
 \end{figure}
 
 \begin{figure}
-	\includegraphics[width=.5\columnwidth]{figures/heatmap_edrec_TIC167894019_s0004.png}
+	\includegraphics[width=\columnwidth]{figures/heatmap_edrec_TIC167894019_s0004.png}
     \caption{Ratio of recovered to injected $ED$ as a function of recovered duration and amplitude for the same synthetic sample as in Fig.~\ref{fig:injrec_recprob}}.
     \label{fig:injrec_edrec}
 \end{figure}
@@ -174,7 +174,7 @@ In the log-log representation the above relation reads
 In the cumulative distribution the power law exponent becomes $-\hat{\alpha} = -\alpha +1$. 
 We used a stabilized Maximum Likelihood Estimator~\citep{maschberger2009} to find $\alpha$. A non-linear least squares fit yielded the intercept $\beta$. We applied two powerful statistical tests to the results~\citep{maschberger2009}. The first is the stabilized Kolmogorov-Smirnov statistic which indicates if the distribution is consistent with a power law with the exponent we determined. We chose a significance level of 5\%, in agreement with previous work~\citep{loyd2018}. The second is the exceedance statistic, which is a test for truncation at the high energy limit of the FFD. To determine $p$-values we drew samples from untruncated power laws with the same minimum energy and number of events as in the observed FFDs. The distribution of the obtained maximum $ED$ values was used for a left-sided hypothesis test at $p=2.5\%$. 
 \\
-The fits and tests will have biased results unless the flares in the FFDs stem from a single light curve with a 100\% recovery probability and ideal energy recovery above a clear cut energy threshold. This is not the case for any of our FFDs. However, we can mitigate these effects using the injection-recovery procedure in Section \ref{subsec:injrec}. Fig. \ref{fig:ffd_all_ed} illustrates the steps we took to do so. First, we adjusted the events' energies using the $ED$ ratio. We placed every flare in the sample onto the heatmap in Fig. \ref{fig:injrec_edrec} according to their recovered amplitude and duration $(a_r,d_r)$. In general, flare energies were underestimated. Then we mapped $(a_r,d_r)$ to $(a_i,FWHM)$ and determined the recovery probability. Dividing by the probability increased the frequency of any event in the distribution. Finally, we used a first order approximation to the detection thresholds of the individual stars. In portions of the FFD where only a fraction of all contributing stars had detected flares we increased the frequencies of flares assuming that the only differences between the light curves are their detection thresholds, and that all flares in the sample follow  the same power law. The other underlying assumption here is that all light curves in fact have a detection threshold in $ED$ that coincides with the lowest detected energy, while in fact the detection threshold is a function of $(a_i,FWHM)$~(Fig. \ref{fig:injrec_recprob}).
+The fits and tests will have biased results unless the flares in the FFDs stem from a single light curve with a 100\% recovery probability and ideal energy recovery above a clear cut energy threshold. This is not the case for any of our FFDs. However, we can partly mitigate the effects of less than ideal recovery using the injection-recovery procedure in Section \ref{subsec:injrec}. Fig. \ref{fig:ffd_all_ed} illustrates the steps we took to do so. First, we adjusted the events' energies using the $ED$ ratio. For this, we placed every flare in the sample onto the heatmap in Fig. \ref{fig:injrec_edrec} according to their recovered amplitude and duration $(a_r,d_r)$. In general, flare energies were underestimated. Then we mapped $(a_r,d_r)$ to $(a_i,FWHM)$ and determined the recovery probability~(Fig. \ref{fig:injrec_recprob}). Dividing by the probability increases the frequency of events in the distribution where events with similar properties were present in the light curve but the recovery failed, which could be due to the de-trending procedure, the overall noise level, or the truncation of events at the margins of continuous observing period. Finally, we used a first order approximation to account for the detection thresholds of individual stars in samples where we aggregated all stars in the sample, or binned by spectral type. In portions of the repsective FFDs where only a fraction of all contributing stars had detected flares we increased the frequencies of flares assuming that the only differences between the light curves are their detection thresholds, and that all flares in the sample follow the same power law within uncertainties. The other underlying assumption here is that all light curves in fact have a detection threshold in $ED$ that coincides with the lowest detected energy, while in fact the detection threshold is a function of $(a_i,FWHM)$~(Fig. \ref{fig:injrec_recprob}). This leads to a systematic error in favor of a too steep power law.
 %The flare frequency distribution, binned by spectral type, is shown in Figure~\ref{fig:ffd}. Overall, the M6 and M7 dwarfs flare more than those in previous work. 
 %
 %
@@ -185,24 +185,26 @@ The fits and tests will have biased results unless the flares in the FFDs stem f
 %\end{figure}
 
 \begin{figure}
-	\includegraphics[width=0.5\columnwidth]{12_03_2020_13_03_full_sample_ffd.png}
+	\includegraphics[width=\columnwidth]{12_03_2020_13_03_full_sample_ffd.png}
     \caption{Log of flare frequency as a function of $ED$ for the TESS Cycle 1 short cadence sample.}
     \label{fig:ffd_all_ed}
 \end{figure}
 
-\begin{figure}
-	\includegraphics[width=.8\columnwidth]{12_03_2020_14_10_individual_target_ffds.png}
+\begin{figure*}
+\centering
+	\includegraphics[width=1.5\columnwidth]{12_03_2020_14_10_individual_target_ffds.png}
     \caption{Log of flare frequency as a function of $ED$ for the most actively flaring stars in TESS Cycle 1 short cadence sample.}
     \label{fig:ffd_indiv_ed}
-\end{figure}
+\end{figure*}
 
-\begin{figure}
-	\includegraphics[width=.8\columnwidth]{12_03_2020_14_42_spt_ffds.png}
+\begin{figure*}
+	\centering
+	\includegraphics[width=1.5\columnwidth]{12_03_2020_14_42_spt_ffds.png}
     \caption{Log of flare frequency as a function of $ED$ split by spectral type in TESS Cycle 1 short cadence sample.}
     \label{fig:ffd_spt_ed}
-\end{figure}
+\end{figure*}
 
-Here, we will probably also talk a lot about the power law fits. 
+%Here, we will probably also talk a lot about the power law fits. 
 
 \subsection{Empirical flare template}\label{subsec:template}
 GJ1243, a radiply rotating M4 dwarf with $P=0.592$\,d, was observed by the primary Kepler mission in 1 min cadence for 11 months. It was actively flaring with a total of 885 flares detected in the light curves~\citep{davenport2014}. From these a semi-empirical flare template was derived with a polynomial rise phase and two overlapping exponential decay phases, which has been widely used in later studies. We reproduced Figure 4 from~\citet{davenport2014} here with the flares in our sample, and fitted the template to the result. If the models are fully consistent, the best fit values for the template parameters will be $t_{peak}=1.$, $FWHM=1.$, and $a=1.$ within uncertainties.
