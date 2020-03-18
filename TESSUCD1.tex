@@ -207,11 +207,12 @@ The fits and tests will have biased results unless the flares in the FFDs stem f
 %Here, we will probably also talk a lot about the power law fits. 
 
 \subsection{Empirical flare template}\label{subsec:template}
-GJ1243, a radiply rotating M4 dwarf with $P=0.592$\,d, was observed by the primary Kepler mission in 1 min cadence for 11 months. It was actively flaring with a total of 885 flares detected in the light curves~\citep{davenport2014}. From these a semi-empirical flare template was derived with a polynomial rise phase and two overlapping exponential decay phases, which has been widely used in later studies. We reproduced Figure 4 from~\citet{davenport2014} here with the flares in our sample, and fitted the template to the result. If the models are fully consistent, the best fit values for the template parameters will be $t_{peak}=1.$, $FWHM=1.$, and $a=1.$ within uncertainties.
-
+GJ1243, a radiply rotating M4 dwarf with $P=0.592$\,d, was observed by the primary Kepler mission in 1 min cadence for 11 months. It was actively flaring with a total of 885 flares detected in the light curves~\citep{davenport2014}. From these a semi-empirical flare template was derived with a polynomial rise phase and two overlapping exponential decay phases, which has been widely used in later studies. In Fig. \ref{fig:template}, we reproduced Fig. 4 from~\citet{davenport2014} with a subsample of the flares in the TESS UCD sample. We excluded complex flares, and filtered out candidates that had relative amplitudes $<1\%$ and $d_r<8$ min to minimize the bias from extrapolation between the observations..
+\\
+We fitted the parameters to the model functions for the rise and the decay phase separately using the same equations 1 and 4 in \citet{davenport2014}. Starting from the model parameters derived from the GJ 1243 sample as the joint gaussian prior, we ran a MCMC chain to fit the TESS UCD sample. The resulting flare model parameters for TESS flares were indistinguishable from those for GJ 1243. We also fitted the parameters starting with uniform priors for the parameters. In this case, the rise phase parameters were very uncertain but consistent with GJ 1243, and the decay phase parameters were somewhat better constrained but also differed from the GJ 1243 only on a $1\sigma$ level. 
 \begin{figure}
-	\includegraphics[width=0.5\columnwidth]{11_03_2020_11_15_all_davenport_fit_median_norel.png}
-    \caption{Yellow: individual flare light curves. Black: Samples from the posterior distribution}
+	\includegraphics[width=\columnwidth]{18_03_2020_11_11_all_davenport_fit_median_norel_long.png}
+    \caption{Red solid: median flux. Red dashed: one standard deviation to median flux. The hue in the background is the overlay of all contributing flare light curves, smoothed by a kernel density estimate.}
     \label{fig:template}
 \end{figure}
 
@@ -224,7 +225,7 @@ GJ1243, a radiply rotating M4 dwarf with $P=0.592$\,d, was observed by the prima
 \vspace{5mm}
 \facilities{}
 
-\software{astropy~\citep{astropy2018}, astroquery~\citep{astroquery2019}. This research made use of Lightkurve, a Python package for Kepler and TESS data analysis~\citep{lightkurve2019}. numpy, scipy, matplotlib}
+\software{astropy~\citep{astropy2018}, astroquery~\citep{astroquery2019}. This research made use of Lightkurve, a Python package for Kepler and TESS data analysis~\citep{lightkurve2019}. numpy, scipy, matplotlib, seaborn for kdeplot}
 
 % it's a rather incomplete bib file, I'll add or feel free to add!
 \bibliography{TESS_UCD} 
